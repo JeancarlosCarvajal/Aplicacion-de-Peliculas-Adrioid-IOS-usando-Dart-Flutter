@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:peliculas/widgets/widgets.dart'; 
 
 class HomeScreen extends StatelessWidget {
    // Key identifica el widget en el arbol de widgets
-  // const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -18,14 +18,25 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: const [
-          
-          CardSwiper(),
-
-          //Listado horizontal de peliculas
-
-        ],
+      body: SingleChildScrollView(// evita error si no entra en la pnatalla le hace scroll
+        child: Column(
+          children: const [
+            
+            //Tarjetas principales
+            CardSwiper(),
+      
+            // Slider de peliculas
+            MovieSlider(),
+            MovieSlider(),
+            MovieSlider(),
+            MovieSlider(),
+            MovieSlider(),
+            MovieSlider(),
+      
+            //Listado horizontal de peliculas
+      
+          ],
+        ),
       )
     );
   }
