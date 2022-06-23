@@ -3,9 +3,20 @@ import 'package:peliculas/screens/screens.dart'; // mateapp genera el template i
 
 void main() => runApp(MyApp());
 
+
+class AppState extends StatelessWidget { // para manejar varios llamados a varias APIS
+  const AppState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Peliculas',
