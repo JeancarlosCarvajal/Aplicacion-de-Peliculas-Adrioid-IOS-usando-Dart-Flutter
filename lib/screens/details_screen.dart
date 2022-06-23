@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
    // Key identifica el widget en el arbol de widgets
@@ -20,19 +21,21 @@ class DetailsScreen extends StatelessWidget {
           _CustomAppBar(),
 
 
-            SliverList( // lo uso de pruebas para poder ver el SliverAppBar
-              // Para ello, se utiliza un delegado para crear elementos a medida que
-              // se desplazan por la pantalla. 
-              delegate: SliverChildListDelegate([
-                // La función builder devuelve un ListTile con un título que
-                // muestra el índice del elemento actual
+          SliverList( // lo uso de pruebas para poder ver el SliverAppBar
+            // Para ello, se utiliza un delegado para crear elementos a medida que
+            // se desplazan por la pantalla. 
+            delegate: SliverChildListDelegate([
+              // La función builder devuelve un ListTile con un título que
+              // muestra el índice del elemento actual
 
-                _PostetAndTitle(),
+              const _PostetAndTitle(),
+              const _Overview(),
+              const _Overview(),
+              const _Overview(),
+              const CastingCards()
 
-              ]),
-            ),
-
-
+            ]),
+          ),
 
             // SliverList( // lo uso de pruebas para poder ver el SliverAppBar
             //   // Para ello, se utiliza un delegado para crear elementos a medida que
@@ -70,6 +73,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.only(bottom: 10),
           color: Colors.black12, // negro transparente
           child: const Text(
               'movie.stile',
@@ -130,6 +134,24 @@ class _PostetAndTitle extends StatelessWidget {
           )
 
         ],
+      ),
+    );
+  }
+}
+
+
+
+class _Overview extends StatelessWidget {
+  const _Overview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text(
+        'Ad laborum amet quis proident. Ut do laborum consequat esse in incididunt exercitation sit labore elit adipisicing dolor. Quis elit elit cupidatat cillum minim non ut. Consequat officia sunt est occaecat cupidatat ullamco laborum magna ea sit commodo aliqua do ad. Sit incididunt voluptate consectetur non.',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
