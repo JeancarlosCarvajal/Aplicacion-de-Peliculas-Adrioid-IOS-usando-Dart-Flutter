@@ -42,7 +42,7 @@ class CardSwiper extends StatelessWidget {
           // print(movie.fullPostering);
 
           return GestureDetector( // para ir a la otra pagina haciendo click en imagen del carrusel
-            onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-instance'),
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
             child: ClipRRect( // permite redondear los bordes de las imagenes en el carrusel
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(

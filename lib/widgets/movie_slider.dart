@@ -114,7 +114,7 @@ class _MoviePoster extends StatelessWidget {
 
 
           GestureDetector( // Para poder disparar click enviar a la otra pagina
-            onTap: () => Navigator.pushNamed(context, 'details', arguments: 'Movie Instance'), // envia a otra pagina de details
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: movie), // envia a otra pagina de details
             child: ClipRRect( // permite redondear los bordes
             borderRadius: BorderRadius.circular(20),
               child: FadeInImage(

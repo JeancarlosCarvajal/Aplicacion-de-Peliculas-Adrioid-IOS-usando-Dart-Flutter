@@ -41,6 +41,14 @@ class Movie {
         'https://i.stack.imgur.com/GNhxO.png';
     }
 
+    // para ve las peliculas en details
+    get fullBackdropPath { // esto reconstruye el url de la image para que devuelva la URL completa de la misma
+      return this.backdropPath != null ?
+        'https://image.tmdb.org/t/p/w500$backdropPath' 
+        :
+        'https://i.stack.imgur.com/GNhxO.png';
+    }
+
     factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
     // String toJson() => json.encode(toMap());
