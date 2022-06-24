@@ -9,11 +9,14 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
   final String _baseUrl = 'api.themoviedb.org';
   final String _language = 'es-ES';
 
-  List<Movie> onDisplayMovies = []; // carrusel principal
+  List<Movie> onDisplayMovies = []; // carrusel pagina principal arriba, cuando es List se iguala a []
 
-  List<Movie> popularMovies = []; // carrusel de abajo
+  List<Movie> popularMovies = []; // carrusel pagina principal de abajo, cuando es List se iguala a []
 
-  int _popularPage = 0;
+  // Uso como llave el Id para que cuando sea buscado se encuentre segun el Id algo parecido a los que hice con el hash the NFT para evitar replicas exactas
+  Map<int, List<Cast>> moviestCast = {}; // para los del casting en detalles de la pelicula en la parte de abajo, cuando es apa se iguala a {}
+
+  int _popularPage = 0; // pagina actual
 
   //INICIO Movies del carrosel principal
   MoviesProvider(){
@@ -89,6 +92,16 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
     notifyListeners(); // es importante porque si hay cambio en la data redibuja toda la pantalla automaticamente 
   }
 
+  Future<List<Cast>> getMovieCast(int movieId) async {
+    if(moviestCast.containsKey(movieId)) return moviestCast[movieId]!; // esta cacheado en este mapa para evitar peticion http sin necesidad
+    //TODO revisar el mapa
+    print('Pidiendo info al servidor de los actores');
+    final jsonData = await _getJsonData('/3/movie/$movieId/credits');
+    final creditsResponse = CreditsResponse.fromJson(jsonData);
 
+    moviestCast[movieId] = creditsResponse.cast;
+
+    return creditsResponse.cast; 
+  }
 
 }

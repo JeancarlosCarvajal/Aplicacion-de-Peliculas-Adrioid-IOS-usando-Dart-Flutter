@@ -38,7 +38,7 @@ class _MovieSliderState extends State<MovieSlider> {
       // print(scrollController.position.pixels); // ver cuanto he recorrido del scroll
       // print(scrollController.position.maxScrollExtent); // ver el ancho total de este scroll
       if(scrollController.position.pixels >= (scrollController.position.maxScrollExtent-500)){
-        print('Debo recargar el scroll, llamar Provider');
+        // print('Debo recargar el scroll, llamar Provider');
         // se ejecuta la funcion que le envie por parametros arriba
         widget.onNextPage(); // a todoas las variables o objetos del constructor tengo que agregarles widget. al inicio es una regla en statefulwidget
       }
