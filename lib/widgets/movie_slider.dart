@@ -2,18 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:peliculas/models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+// esto era StatelessWidget y lo converti en StatefulWidget, para eliminar la paginacion cunado llegue al final 
+// o sea poder manejar las variables y modificarlas
+class MovieSlider extends StatefulWidget {
  
  
   final List<Movie> movies; // esto es un Array de elementos del tipo Movie
   final String? title;
+  // onNextPage es una funcion que se recibe como argumento en el MovieSlider para que pueda 
+  // ser modificable en el foturo y poder mandar la funcion que queramos a requerimiento
+  final Function onNextPage; 
 
   const MovieSlider({
     Key? key, 
     required this.movies,
+    required this.onNextPage,
     this.title,
   }) : super(key: key);
-  
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+
+  // Creamos un objeto del tipo ScrollController que me permite en el initState crear un listener
+  final ScrollController scrollController = new ScrollController();
+
+  // initState se crea para ejecutar codigo la primera vez cuando el widget es construido
+  @override
+  void initState() { 
+    // TODO: implement initState 
+    super.initState();
+    scrollController.addListener(() {
+      // print(scrollController.position.pixels); // ver cuanto he recorrido del scroll
+      // print(scrollController.position.maxScrollExtent); // ver el ancho total de este scroll
+      if(scrollController.position.pixels >= (scrollController.position.maxScrollExtent-500)){
+        print('Debo recargar el scroll, llamar Provider');
+        // se ejecuta la funcion que le envie por parametros arriba
+        widget.onNextPage(); // a todoas las variables o objetos del constructor tengo que agregarles widget. al inicio es una regla en statefulwidget
+      }
+
+    });
+  }
+
+  // dispose cuando el widget va a ser destruido
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+
+    super.dispose(); 
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,20 +67,21 @@ class MovieSlider extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
 
-          // TODO si no hay titulo no se debe mostrar este widget
-          if(title != null) // NOOO me muestra el padding en caso que no haya titulo
+          // si no hay titulo no se debe mostrar este widget
+          if(widget.title != null) // NOOO me muestra el padding en caso que no haya titulo
           Padding( // para darle padding al texto
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            child: Text(widget.title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
           ), 
 
           const SizedBox(height: 5,),
 
           Expanded(
             child: ListView.builder( // aqui me daba un error porque se sobre pasaba el ancho debido al padding parecido a lo que ocurre en CSS3, y agrege widget Expanded
-            scrollDirection: Axis.horizontal,
-              itemCount: movies.length,
-              itemBuilder: ( _ , int index) => _MoviePoster( movie: movies[index] ),
+              controller: scrollController, // para ser leido con el eventlistener
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.movies.length,
+              itemBuilder: ( _ , int index) => _MoviePoster( movie: widget.movies[index] ),
             ),
           ),
 

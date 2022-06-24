@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
     // Ve al arbol de widgets (context) traeme la instancia de MoviesProvider y metelo en la variable final
     // esto sirve es para que cuando llegue la informacion desde la API se redibuje la pantalla y me mueste los datos 
-    final moviesProvider = Provider.of<MoviesProvider>(context);  
+    final moviesProvider = Provider.of<MoviesProvider>(context);
     // print(moviesProvider.onDisplayMovies); // esto sirve es para que cuando llegue la informacion desde la API se redibuje la pantalla y me mueste los datos
 
     return Scaffold(
@@ -36,7 +36,8 @@ class HomeScreen extends StatelessWidget {
             // Slider de peliculas
             MovieSlider(
               movies: moviesProvider.popularMovies,
-              title: 'Populares', // debe ser opcional
+              title: 'Populares',
+              onNextPage: () => moviesProvider.getPopularMovies() // debe ser opcional
             ),
             // MovieSlider(),
             // MovieSlider(),
