@@ -33,6 +33,14 @@ class Movie {
     double voteAverage;
     int voteCount;
 
+    // donde tenga la instancia de Movie se tendra acceso a este getter fullPostering
+    get fullPostering { // esto reconstruye el url de la image para que devuelva la URL completa de la misma
+      return posterPath != null ?
+        'https://image.tmdb.org/t/p/w500$posterPath' 
+        :
+        'https://i.stack.imgur.com/GNhxO.png';
+    }
+
     factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
     // String toJson() => json.encode(toMap());
