@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas/models/models.dart'; 
+import 'package:peliculas/models/models.dart';
+import 'package:peliculas/models/seach_movie_response.dart'; 
 import '/apis/api_keys.dart';
 // import 'dart:convert'; // se usa para manejar los json
 class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier  para que pueda funcionar
@@ -102,6 +103,21 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
     moviestCast[movieId] = creditsResponse.cast;
 
     return creditsResponse.cast; 
+  }
+
+  Future<List<Movie>> searchMovie(String query) async {
+    final url = Uri.https(_baseUrl, '3/search/movie', {
+      'api_key': _apiKey,
+      'languagepage': _language,
+      // 'page': '$page',  // opcional
+      'query': query
+
+    });
+    final responce = await http.get(url);
+    // asi deberia ser origilamente pero al agregarle fromJson, se encarga automaticamente de cargarle los datos desde el Json
+    // final searchResponse = SearchResponse(page: page, results: results, totalPages: totalPages, totalResults: totalResults)
+    final searchResponse = SearchResponse.fromJson(responce.body);
+    return searchResponse.results;
   }
 
 }

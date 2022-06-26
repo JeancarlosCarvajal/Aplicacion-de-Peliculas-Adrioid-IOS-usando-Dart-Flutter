@@ -21,6 +21,7 @@ class CastingCards extends StatelessWidget {
     return FutureBuilder(
       future: moviesProvider.getMovieCast(movieId),
       builder: ( _  , AsyncSnapshot<List<Cast>> snapshot){ // retorna un tipo <List<Cast>>
+      
         if(!snapshot.hasData){
           return Container(
             constraints: const BoxConstraints(maxWidth: 150),
@@ -30,14 +31,14 @@ class CastingCards extends StatelessWidget {
         }
 
         final List<Cast> cast = snapshot.data!;
-
+        // print(cast.contains(''));
         return Container(
           margin: const EdgeInsets.only(bottom: 30),
           width: double.infinity,
           height: 180,
           // color: Colors.red, // usado de referencia para ver los amrgins y paddings
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: cast.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: ( _ , int index) => _CastCard(actor: cast[index]),
           ),
@@ -51,6 +52,7 @@ class CastingCards extends StatelessWidget {
 class _CastCard extends StatelessWidget {
 
   final Cast actor;
+  
   const _CastCard({
     Key? key,
     required this.actor
