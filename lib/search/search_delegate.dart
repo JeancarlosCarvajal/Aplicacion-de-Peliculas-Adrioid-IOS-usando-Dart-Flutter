@@ -88,12 +88,17 @@ class _MovieItem extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    // creado para darle id diferente al mismo elemento dependiendo si estan junto en la misma panatalla principal y pueda funcionar el Hero()
+    movie.heroId = 'search-${movie.id}';
     return ListTile(
-      leading: FadeInImage(
-        placeholder: const AssetImage('assets/no-image.jpg'),
-        image: NetworkImage(movie.fullPostering),
-        width: 50,
-        fit: BoxFit.contain,
+      leading: Hero(
+        tag: movie.heroId!,
+        child: FadeInImage(
+          placeholder: const AssetImage('assets/no-image.jpg'),
+          image: NetworkImage(movie.fullPostering),
+          width: 50,
+          fit: BoxFit.contain,
+        ),
       ),
       title: Text(movie.title),
       subtitle: Text(movie.originalTitle),

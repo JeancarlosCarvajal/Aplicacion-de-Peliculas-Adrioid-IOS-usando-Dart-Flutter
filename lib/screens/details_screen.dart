@@ -129,13 +129,15 @@ class _PostetAndTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: const AssetImage('assets/no-image.jpg'), 
-              image: NetworkImage(movie.fullPostering),
-              height: 150,
-              width: 110,
+          Hero( // esto es para hacer efecto de zoom cuando voy de una pantalla a otra, si en la otra pantalla esta el mismo elemento entonces se hace zoom deben tener el mismo id
+            tag: movie.heroId!,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: const AssetImage('assets/no-image.jpg'), 
+                image: NetworkImage(movie.fullPostering),
+                height: 150, 
+              ),
             ),
           ),
 

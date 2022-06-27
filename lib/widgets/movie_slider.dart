@@ -81,7 +81,7 @@ class _MovieSliderState extends State<MovieSlider> {
               controller: scrollController, // para ser leido con el eventlistener
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,
-              itemBuilder: ( _ , int index) => _MoviePoster( movie: widget.movies[index] ),
+              itemBuilder: ( _ , int index) => _MoviePoster( movie: widget.movies[index],  heroId: '${widget.title}-$index-${widget.movies[index].id}'), // heroId: '${widget.title}-$index-${widget.movies[index].id} lo agregge para poder usar el hero con id unico
             ),
           ),
 
@@ -97,13 +97,18 @@ class _MoviePoster extends StatelessWidget {
   
   final Movie movie; // esto es la Movie es como una constante del tipo Movie
 
+  final String heroId;
+  
   const _MoviePoster({
     Key? key,  
     required this.movie,
+    required this.heroId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    movie.heroId = heroId;
     return Container(
       width: 130,
       height: 190,
@@ -115,14 +120,17 @@ class _MoviePoster extends StatelessWidget {
 
           GestureDetector( // Para poder disparar click enviar a la otra pagina
             onTap: () => Navigator.pushNamed(context, 'details', arguments: movie), // envia a otra pagina de details
-            child: ClipRRect( // permite redondear los bordes
-            borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: const AssetImage('assets/no-image.jpg'), 
-                image: NetworkImage(movie.fullPostering), // aqui va la imagen de la API
-                width: 130,
-                height: 190,
-                fit: BoxFit.cover,
+            child: Hero( // esto es para hacer efecto de zoom cuando voy de una pantalla a otra, si en la otra pantalla esta el mismo elemento entonces se hace zoom deben tener el mismo id
+              tag: movie.heroId!,
+              child: ClipRRect( // permite redondear los bordes
+              borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/no-image.jpg'), 
+                  image: NetworkImage(movie.fullPostering), // aqui va la imagen de la API
+                  width: 130,
+                  height: 190,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

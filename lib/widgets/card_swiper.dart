@@ -41,14 +41,20 @@ class CardSwiper extends StatelessWidget {
           final movie = movies[index];
           // print(movie.fullPostering);
 
+          // creado para darle id diferente al mismo elemento dependiendo si estan junto en la misma panatalla principal y pueda funcionar el Hero()
+          movie.heroId = 'swiper-${movie.id}';
+
           return GestureDetector( // para ir a la otra pagina haciendo click en imagen del carrusel
             onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
-            child: ClipRRect( // permite redondear los bordes de las imagenes en el carrusel
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: const AssetImage('assets/no-image.jpg'), 
-                image: NetworkImage(movie.fullPostering),
-                fit: BoxFit.cover,
+            child: Hero( //idi unico sino no funciona
+              tag: movie.heroId!, // me daba error y le agrege !
+              child: ClipRRect( // permite redondear los bordes de las imagenes en el carrusel
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/no-image.jpg'), 
+                  image: NetworkImage(movie.fullPostering),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );

@@ -33,6 +33,9 @@ class Movie {
     double voteAverage;
     int voteCount;
 
+    // creado para darle id diferente al mismo elemento dependiendo si estan junto en la misma panatalla principal y pueda funcionar el Hero()
+    String? heroId;
+
     // donde tenga la instancia de Movie se tendra acceso a este getter fullPostering
     get fullPostering { // esto reconstruye el url de la image para que devuelva la URL completa de la misma
       return posterPath != null ?
