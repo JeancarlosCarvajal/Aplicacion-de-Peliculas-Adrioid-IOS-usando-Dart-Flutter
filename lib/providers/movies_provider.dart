@@ -1,5 +1,7 @@
+import 'dart:async'; 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/helpers/debouncer.dart';
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/models/seach_movie_response.dart'; 
 import '/apis/api_keys.dart';
@@ -18,6 +20,14 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
   Map<int, List<Cast>> moviestCast = {}; // para los del casting en detalles de la pelicula en la parte de abajo, cuando es apa se iguala a {}
 
   int _popularPage = 0; // pagina actual
+
+  // se creo para evitar muchos llamados http a la API
+  final debouncer = Debouncer(
+    duration: Duration(milliseconds: 500), 
+  );
+  final StreamController<List<Movie>> _suggestionStringController = new StreamController.broadcast();
+  Stream<List<Movie>> get suggestionStream => this._suggestionStringController.stream;
+
 
   //INICIO Movies del carrosel principal
   MoviesProvider(){
@@ -113,11 +123,32 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
       'query': query
 
     });
+    
     final responce = await http.get(url);
     // asi deberia ser origilamente pero al agregarle fromJson, se encarga automaticamente de cargarle los datos desde el Json
     // final searchResponse = SearchResponse(page: page, results: results, totalPages: totalPages, totalResults: totalResults)
     final searchResponse = SearchResponse.fromJson(responce.body);
     return searchResponse.results;
+  }
+
+  // este metodo mete el valor de query al string cuando el debouncer emita el valor o que es lo mismo cuando la persona deja de escribir
+  void getSuggestionsByQuery( String searchTerm ) { 
+    debouncer.value = ''; // limpiamos el valor
+    // una vez se tenga valor se activa el debouncer
+    debouncer.onValue = ( value ) async { // aqui el this es opcional
+      print('Tenemos un valor a buscar: $value');
+      final results = await this.searchMovie(value); // el value viene siendo el query
+      this._suggestionStringController.add(results); // al tener los reusltados se agrega el evento en el suggestionStringController
+    };
+
+    // creamos un timer 
+    final timer = Timer.periodic(const Duration(milliseconds: 300), ( _ ) {
+      debouncer.value = searchTerm;
+    });
+
+    // cancelar el timar si se vuelve a recibir el valor
+    Future.delayed(const Duration(milliseconds: 301)).then(( _ ) => timer.cancel());
+
   }
 
 }

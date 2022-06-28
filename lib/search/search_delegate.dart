@@ -44,6 +44,7 @@ class MovieSearchDelegate extends SearchDelegate {
     );
   }
   
+  // buildSuggestions se va ir disparando cada vez que una persona toca una tecla
   @override
   Widget buildSuggestions(BuildContext context) { 
     // return Text('buildSuggestions: $query') ;
@@ -52,16 +53,23 @@ class MovieSearchDelegate extends SearchDelegate {
     // $query proviene del searchresearch
      // aparece lo que se esta escribiendo en la parte de abajo
     // return Text('buildSuggestions: $query') ;
-    if(query.isEmpty){
+    if((query.trim()).isEmpty){
+      print('Query vacio');
       return const Center(
         child: Icon(Icons.movie_creation_outlined, color: Colors.black38, size: 130),
       );
     }
-    
+    print('http request');
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
 
-    return FutureBuilder(
-      future: moviesProvider.searchMovie(query), 
+
+    // esto se creo para manejar las veces que se hace las peticiones http evitar muchos llamados a la API
+    //  se manda a llamar cada vez que la persona toca una tecla o teclas direciconales
+    moviesProvider.getSuggestionsByQuery(query);
+
+    // el StreamBuilder solo se va a redibujar cuando  moviesProvider.suggestionStream emite un valor mediante un evento add()
+    return StreamBuilder( // era FutureBuilder, lo cambie para poder manejar el evento del input evitar que pida demasiados llamados http a la API
+      stream: moviesProvider.suggestionStream, 
       builder: ( _ , AsyncSnapshot<List<Movie>> snapshot){ // <List<Movie>> me importo 'package:peliculas/models/models.dart';
         if(!snapshot.hasData) return _EmptyContainer(); 
 
