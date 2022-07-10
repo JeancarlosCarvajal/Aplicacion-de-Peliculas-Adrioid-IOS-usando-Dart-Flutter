@@ -18,7 +18,7 @@ class AppState extends StatelessWidget { // para manejar varios llamados a varia
       ],
       child: const MyApp(),
     );
-  }
+  } 
 }
 
 class MyApp extends StatelessWidget {
