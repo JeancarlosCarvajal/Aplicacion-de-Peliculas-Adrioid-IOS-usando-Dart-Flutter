@@ -61,7 +61,7 @@ class _MovieSliderState extends State<MovieSlider> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 270,
+      height: 330,
       // color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class _MovieSliderState extends State<MovieSlider> {
             child: Text(widget.title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
           ), 
 
-          const SizedBox(height: 5,),
+          const SizedBox(height: 25),
 
           Expanded(
             child: ListView.builder( // aqui me daba un error porque se sobre pasaba el ancho debido al padding parecido a lo que ocurre en CSS3, y agrege widget Expanded
@@ -113,7 +113,7 @@ class _MoviePoster extends StatelessWidget {
       width: 130,
       height: 190,
       // color: Colors.green,
-      margin: const EdgeInsets.symmetric(horizontal: 10),//pa que me separe lo items uno del otro
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),//pa que me separe lo items uno del otro
       child: Column(
         children:  [
 
@@ -139,7 +139,8 @@ class _MoviePoster extends StatelessWidget {
 
           Text(
             movie.title, // Aqui va la respuesta de la API
-            maxLines: 2, // para que me haga dos lineas luego los tres puntitios con el overflow de abajo
+            // 'Hola mundo Hola mundo Hola mundo Hola mundo Hola mundo Hola mundo Hola mundo Hola mundo ',
+            maxLines: 3, // para que me haga dos lineas luego los tres puntitios con el overflow de abajo
             overflow: TextOverflow.ellipsis, // evita error de barras amarillas por overflow agregando tres puntitos al final parecida a la funcion que hice en PHP
             textAlign: TextAlign.center,
           )
