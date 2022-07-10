@@ -27,7 +27,7 @@ class CardSwiper extends StatelessWidget {
       );
     }
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height*0.5, // tomar el 60% de la pantalla
       // color: Colors.red,// para pruebas 

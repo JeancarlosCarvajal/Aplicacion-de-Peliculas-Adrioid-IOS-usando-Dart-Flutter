@@ -23,7 +23,7 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
 
   // se creo para evitar muchos llamados http a la API
   final debouncer = Debouncer(
-    duration: Duration(milliseconds: 500), 
+    duration: const Duration(milliseconds: 500), 
   );
   final StreamController<List<Movie>> _suggestionStringController = new StreamController.broadcast();
   Stream<List<Movie>> get suggestionStream => this._suggestionStringController.stream;
@@ -105,8 +105,8 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
 
   Future<List<Cast>> getMovieCast(int movieId) async {
     if(moviestCast.containsKey(movieId)) return moviestCast[movieId]!; // esta cacheado en este mapa para evitar peticion http sin necesidad
-    //TODO revisar el mapa
-    print('Pidiendo info al servidor de los actores');
+    //  revisar el mapa
+    // print('Pidiendo info al servidor de los actores');
     final jsonData = await _getJsonData('/3/movie/$movieId/credits');
     final creditsResponse = CreditsResponse.fromJson(jsonData);
 
@@ -136,7 +136,7 @@ class MoviesProvider extends ChangeNotifier { // agrege  extends ChangeNotifier 
     debouncer.value = ''; // limpiamos el valor
     // una vez se tenga valor se activa el debouncer
     debouncer.onValue = ( value ) async { // aqui el this es opcional
-      print('Tenemos un valor a buscar: $value');
+      // print('Tenemos un valor a buscar: $value');
       final results = await this.searchMovie(value); // el value viene siendo el query
       this._suggestionStringController.add(results); // al tener los reusltados se agrega el evento en el suggestionStringController
     };

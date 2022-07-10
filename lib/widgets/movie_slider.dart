@@ -32,7 +32,7 @@ class _MovieSliderState extends State<MovieSlider> {
   // initState se crea para ejecutar codigo la primera vez cuando el widget es construido
   @override
   void initState() { 
-    // TODO: implement initState 
+    // : implement initState 
     super.initState();
     scrollController.addListener(() {
       // print(scrollController.position.pixels); // ver cuanto he recorrido del scroll
@@ -49,7 +49,7 @@ class _MovieSliderState extends State<MovieSlider> {
   // dispose cuando el widget va a ser destruido
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
 
 
     super.dispose(); 
@@ -59,7 +59,7 @@ class _MovieSliderState extends State<MovieSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 270,
       // color: Colors.red,

@@ -38,7 +38,7 @@ class MovieSearchDelegate extends SearchDelegate {
   }
 
   // para ser usado como respuesta vacia de la busqueda
-  Widget _EmptyContainer() {
+  Widget _emptyContainer() {
     return const Center(
       child: Icon(Icons.movie_creation_outlined, color: Colors.black38, size: 130),
     );
@@ -54,12 +54,12 @@ class MovieSearchDelegate extends SearchDelegate {
      // aparece lo que se esta escribiendo en la parte de abajo
     // return Text('buildSuggestions: $query') ;
     if((query.trim()).isEmpty){
-      print('Query vacio');
+      // print('Query vacio');
       return const Center(
         child: Icon(Icons.movie_creation_outlined, color: Colors.black38, size: 130),
       );
     }
-    print('http request');
+    // print('http request');
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
 
 
@@ -71,7 +71,7 @@ class MovieSearchDelegate extends SearchDelegate {
     return StreamBuilder( // era FutureBuilder, lo cambie para poder manejar el evento del input evitar que pida demasiados llamados http a la API
       stream: moviesProvider.suggestionStream, 
       builder: ( _ , AsyncSnapshot<List<Movie>> snapshot){ // <List<Movie>> me importo 'package:peliculas/models/models.dart';
-        if(!snapshot.hasData) return _EmptyContainer(); 
+        if(!snapshot.hasData) return _emptyContainer(); 
 
         final movies = snapshot.data;
 

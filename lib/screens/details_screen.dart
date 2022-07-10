@@ -9,12 +9,12 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // TODO: Cambiar luego por una instancia de movie
+    // : Cambiar luego por una instancia de movie
 
     // settings.arguments es una pelicula ahora
     // por lo tanto debo agregar 'as Movie'
     final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
-    print(movie.title);
+    // print(movie.title);
  
     return  Scaffold(
       body: CustomScrollView(
@@ -30,18 +30,18 @@ class DetailsScreen extends StatelessWidget {
               // La función builder devuelve un ListTile con un título que
               // muestra el índice del elemento actual
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               _PostetAndTitle(movie: movie),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               _Overview(movie: movie),
               // _Overview(movie: movie),
               
               // SizedBox(height: 50),
 
-              Divider(height: 70),
+              const Divider(height: 70),
 
               CastingCards(movieId: movie.id)
 
