@@ -30,15 +30,19 @@ class DetailsScreen extends StatelessWidget {
               // La función builder devuelve un ListTile con un título que
               // muestra el índice del elemento actual
 
+              SizedBox(height: 30),
+
               _PostetAndTitle(movie: movie),
+
+              SizedBox(height: 30),
+
               _Overview(movie: movie),
               // _Overview(movie: movie),
-              // _Overview(movie: movie),
-              // _Overview(movie: movie),
-              // _Overview(movie: movie),
-              // _Overview(movie: movie),
-              // _Overview(movie: movie),
               
+              // SizedBox(height: 50),
+
+              Divider(height: 70),
+
               CastingCards(movieId: movie.id)
 
             ]),
@@ -185,7 +189,8 @@ class _Overview extends StatelessWidget {
       child: Text(
         movie.overview,
         textAlign: TextAlign.justify,
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.subtitle1!.merge(const TextStyle(height: 2, )),
+        // style: TextStyle(height: 2, ),
       ),
     );
   }
