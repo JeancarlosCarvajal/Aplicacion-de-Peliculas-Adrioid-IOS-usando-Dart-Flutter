@@ -25,6 +25,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+// INICIO Aqui esta la llave y las calves de autenticacion de mi KEYTOOL 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+// FIN Aqui esta la llave y las calves de autenticacion de mi KEYTOOL 
+
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -43,23 +51,31 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.peliculas"
+        // Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.healthybelleza.peliculas"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        minSdkVersion 20
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled = true
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
-    }
+   signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+       }
+   }
+
 }
 
 flutter {
@@ -67,20 +83,21 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation("androidx.multidex:multidex:2.0.1")
 }
 
 // INICIO agrege esto debajo para evitar el error de compilacion ".dex file cannot exceed 64K"
 // https://developer.android.com/studio/build/multidex#kts
-android {
-    defaultConfig { 
-        minSdk = 20
-        targetSdk = 28
-        multiDexEnabled = true
-    } 
-}
+// android {
+//     defaultConfig { 
+//         minSdk = 20
+//         targetSdk = 28
+//         multiDexEnabled = true
+//     } 
+// }
 
-dependencies {
-    implementation("androidx.multidex:multidex:2.0.1")
-}
+// dependencies {
+//     implementation("androidx.multidex:multidex:2.0.1")
+// }
 // FIN agrege esto debajo para evitar el error de compilacion ".dex file cannot exceed 64K"
