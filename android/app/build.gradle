@@ -34,7 +34,14 @@ if (keystorePropertiesFile.exists()) {
 // FIN Aqui esta la llave y las calves de autenticacion de mi KEYTOOL 
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    // lo agrege yo en https://developer.android.com/studio/build/configure-app-module#set-namespace
+    namespace "com.healthybelleza.peliculas" 
+    // lo agrege yo en https://developer.android.com/studio/build/configure-app-module#change-namespace-for-testing
+    testNamespace "com.healthybelleza.TESTpeliculas" 
+    // lo agrege yo de https://docs.flutter.dev/deployment/android#under-the-android-block
+    // usualmente es la misma que targetSdkVersion
+    compileSdkVersion 31
+
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -53,28 +60,29 @@ android {
     defaultConfig {
         // Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.healthybelleza.peliculas"
+        testApplicationId "com.healthybelleza.peliculas.test" // lo agrege yo en https://developer.android.com/studio/build/configure-app-module#change_the_application_id_for_testing
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 20
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        targetSdkVersion 31
+        versionCode 6
+        versionName "1.0.5"
         multiDexEnabled = true
     }
 
-   signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       }
-   }
-   buildTypes {
-       release {
-           signingConfig signingConfigs.release
-       }
-   }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 
 }
 
@@ -83,6 +91,6 @@ flutter {
 }
 
 dependencies {
-    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation("androidx.multidex:multidex:2.0.1")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation("androidx.multidex:multidex:2.0.1") // le tenia antes agrege yo
 }

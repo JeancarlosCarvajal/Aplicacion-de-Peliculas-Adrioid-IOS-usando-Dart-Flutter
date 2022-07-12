@@ -1,11 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.healthybelleza.peliculas">
-   <application
+    <!-- Lo agrege yo de https://docs.flutter.dev/deployment/android#reviewing-the-app-manifest#uses-permission -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="Películas"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <!-- en android:name= tenia  .MainActivity lo cambie por com.healthybelleza.peliculas.MainActivity 
+        segun https://developer.android.com/studio/build/configure-app-module#set-namespace  -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.healthybelleza.peliculas.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
