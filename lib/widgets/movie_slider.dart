@@ -27,7 +27,7 @@ class MovieSlider extends StatefulWidget {
 class _MovieSliderState extends State<MovieSlider> {
 
   // Creamos un objeto del tipo ScrollController que me permite en el initState crear un listener
-  final ScrollController scrollController = new ScrollController();
+  final ScrollController scrollController = new ScrollController(); // tenia new
 
   // initState se crea para ejecutar codigo la primera vez cuando el widget es construido
   @override
@@ -35,14 +35,13 @@ class _MovieSliderState extends State<MovieSlider> {
     // : implement initState 
     super.initState();
     scrollController.addListener(() {
-      // print(scrollController.position.pixels); // ver cuanto he recorrido del scroll
-      // print(scrollController.position.maxScrollExtent); // ver el ancho total de este scroll
+      print(scrollController.position.pixels); // ver cuanto he recorrido del scroll
+      print(scrollController.position.maxScrollExtent); // ver el ancho total de este scroll
       if(scrollController.position.pixels >= (scrollController.position.maxScrollExtent-500)){
         // print('Debo recargar el scroll, llamar Provider');
         // se ejecuta la funcion que le envie por parametros arriba
         widget.onNextPage(); // a todoas las variables o objetos del constructor tengo que agregarles widget. al inicio es una regla en statefulwidget
       }
-
     });
   }
 
@@ -78,6 +77,8 @@ class _MovieSliderState extends State<MovieSlider> {
 
           Expanded(
             child: ListView.builder( // aqui me daba un error porque se sobre pasaba el ancho debido al padding parecido a lo que ocurre en CSS3, y agrege widget Expanded
+              // physics: const NeverScrollableScrollPhysics(),
+              // shrinkWrap: true,
               controller: scrollController, // para ser leido con el eventlistener
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,

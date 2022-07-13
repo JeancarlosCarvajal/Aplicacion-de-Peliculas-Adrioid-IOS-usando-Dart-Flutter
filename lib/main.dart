@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/screens/screens.dart';
 import 'package:provider/provider.dart'; // mateapp genera el template inicial 
@@ -16,7 +17,11 @@ class AppState extends StatelessWidget { // para manejar varios llamados a varia
         // lazy: false se usa para que tan pronto es creado este widget ChangeNotifierProvider se manda a llamar la inicializacion del el mismo
         ChangeNotifierProvider(create: ( _ ) => MoviesProvider(), lazy: false )
       ],
-      child: const MyApp(),
+      child: const MyApp(), // una forma de hacerlo tambien
+      // builder: (context, child) { // tambien se usa asi
+      //   // No longer throws
+      //   return const MyApp();
+      // }
     );
   } 
 }
@@ -28,6 +33,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse, 
+          PointerDeviceKind.touch, 
+          PointerDeviceKind.stylus, 
+          PointerDeviceKind.unknown,
+          PointerDeviceKind.trackpad
+        },
+      ),
       debugShowCheckedModeBanner: false,
       title: 'Peliculas',
       initialRoute: 'home',
@@ -43,3 +58,19 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => { 
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    // etc.
+  };
+}
+
+// Set ScrollBehavior for an entire application.
+// MaterialApp(
+//   scrollBehavior: MyCustomScrollBehavior(),
+//   // ...
+// );

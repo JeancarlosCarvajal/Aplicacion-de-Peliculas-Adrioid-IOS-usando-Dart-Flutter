@@ -46,7 +46,7 @@ class CardSwiper extends StatelessWidget {
 
           return GestureDetector( // para ir a la otra pagina haciendo click en imagen del carrusel
             onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
-            child: Hero( //idi unico sino no funciona
+            child: Hero( //id unico sino no funciona
               tag: movie.heroId!, // me daba error y le agrege !
               child: ClipRRect( // permite redondear los bordes de las imagenes en el carrusel
                 borderRadius: BorderRadius.circular(20),

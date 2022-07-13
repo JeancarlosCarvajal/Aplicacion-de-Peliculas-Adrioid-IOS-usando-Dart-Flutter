@@ -91,6 +91,8 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // me daba este error w: Runtime JAR files in the classpath should have the same version. These files were found in the classpath: // tenia jdk7 y coloque jdk8
+    // https://stackoverflow.com/questions/71347054/flutter-build-runtime-jar-files-in-the-classpath-should-have-the-same-version-t 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version" 
     implementation("androidx.multidex:multidex:2.0.1") // le tenia antes agrege yo
 }
